@@ -1,0 +1,26 @@
+import pytz
+from datetime import datetime
+
+def convert_time_zone(time_str, from_zone, to_zone):
+    # Convert string to datetime object
+    date_time_obj = datetime.strptime(time_str, '%Y-%m-%d %H:%M:%S')
+
+    # Set time zones
+    from_tz = pytz.timezone(from_zone)
+    to_tz = pytz.timezone(to_zone)
+
+    # Convert time zone
+    from_tz_localized = from_tz.localize(date_time_obj)
+    to_tz_localized = from_tz_localized.astimezone(to_tz)
+
+    # Format output
+    to_time_str = to_tz_localized.strftime('%Y-%m-%d %H:%M:%S %Z')
+
+    return to_time_str
+
+time_str = '2022-02-24 15:00:00'
+from_zone = 'America/New_York'
+to_zone = 'Asia/Manila'
+
+new_time_str = convert_time_zone(time_str, from_zone, to_zone)
+print(new_time_str)
